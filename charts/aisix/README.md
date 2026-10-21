@@ -531,6 +531,7 @@ rejects. New installs set the value in its own key in `values.yaml` or under
 | admin.service.annotations | object | `{}` | Extra annotations for the admin Service |
 | admin.service.port | int | `3001` | Admin Service port |
 | affinity | object | `{}` | Affinity rules for the gateway pods |
+| annotations | object | `{}` | Extra annotations for the Deployment |
 | autoscaling.behavior | object | `{}` | `spec.behavior` for the HPA. Empty uses the Kubernetes defaults (immediate scale-up, 5-minute scale-down stabilization). A gateway that carries long streaming responses usually wants a gentler scale-down, e.g. `scaleDown: {policies: [{type: Pods, value: 1, periodSeconds: 60}]}` |
 | autoscaling.enabled | bool | `false` | Create a HorizontalPodAutoscaler for the gateway Deployment |
 | autoscaling.extraMetrics | list | `[]` | Extra `spec.metrics` entries appended verbatim — Pods / Object / External metrics such as a Prometheus adapter series |
@@ -604,7 +605,6 @@ rejects. New installs set the value in its own key in `values.yaml` or under
 | controlPlane.enabled | bool | `true` | Read configuration from an AISIX control plane. Set to false to run standalone, from the `resources.yaml` file configured under `standalone` |
 | controlPlane.etcdEndpoint | string | `""` | Control-plane etcd endpoint as bare `host:port`. Leave empty unless the control plane publishes an etcd endpoint distinct from `baseURL` |
 | controlPlane.heartbeatIntervalSeconds | int | `15` | Heartbeat interval in seconds. The control plane marks a gateway connected on its first heartbeat. Clamped to [5, 300] by the gateway |
-| deploymentAnnotations | object | `{}` | Extra annotations for the Deployment |
 | extraEnvVars | list | `[]` | Extra environment variables for the gateway container: system-level environment variables (such as `TZ`) and variables referenced by the resources file. Gateway settings belong in `config`. Overriding a variable the chart sets itself is only a compatibility path for existing deployments: for a name chart 1.5.0 set, the rendered container then lists it twice, which Helm 4 server-side apply rejects. New installs set the value in its own key or under `config` |
 | extraVolumeMounts | list | `[]` | Extra volume mounts for the gateway container |
 | extraVolumes | list | `[]` | Extra volumes for the gateway pod |
